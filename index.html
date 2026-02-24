@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML CI Concurrency Workflow Guide</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      line-height: 1.7;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+
+    h1, h2 {
+      color: #58a6ff;
+    }
+
+    pre {
+      background: #161b22;
+      padding: 16px;
+      border-radius: 10px;
+      overflow: auto;
+      border: 1px solid #30363d;
+    }
+
+    code {
+      color: #79c0ff;
+    }
+
+    ul {
+      background: #161b22;
+      padding: 15px 25px;
+      border-radius: 10px;
+      border: 1px solid #30363d;
+    }
+
+    p {
+      color: #adbac7;
+    }
+
+    .card {
+      background: #161b22;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🌙 HTML CI Pipeline using GitHub Actions (Concurrency)</h1>
+
+<div class="card">
+<h2>📁 Step 1 — Project Structure</h2>
+<pre>
+your-project/
+│
+├── index.html
+└── .github/workflows/ci.yml
+</pre>
+</div>
+
+<div class="card">
+<h2>⚙️ Step 2 — Workflow File Location</h2>
+<p>Create file:</p>
+<pre>.github/workflows/ci.yml</pre>
+</div>
+
+<div class="card">
+<h2>🧠 Step 3 — YAML Workflow Content</h2>
+
+<pre>
+name: HTML CI (Concurrency Standard)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate project
+        run: echo "HTML project pushed successfully"
+
+      - name: List files
+        run: ls -la
+</pre>
+</div>
+
+<div class="card">
+<h2>🚀 Step 4 — Push to GitHub</h2>
+
+<pre>
+git init
+git add .
+git commit -m "HTML CI concurrency project"
+git branch -M main
+git remote add origin https://github.com/SuryaSekharNag/Job-Concurrency.git
+git push -u origin main
+</pre>
+</div>
+
+<div class="card">
+<h2>🎯 Concept Explained</h2>
+<p>
+Concurrency ensures only the latest workflow runs and cancels previous builds,
+preventing duplicate CI execution and saving CI resources.
+</p>
+</div>
+
+<div class="card">
+<h2>✅ Outcome</h2>
+<ul>
+  <li>Project pushed to GitHub</li>
+  <li>Workflow runs automatically</li>
+  <li>Concurrency optimization enabled</li>
+</ul>
+</div>
+
+</body>
+</html>
